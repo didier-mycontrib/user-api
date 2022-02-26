@@ -62,7 +62,7 @@ function save(entity) {
 }
 
 function updateOne(newValueOfEntityToUpdate) {
-  return genericPromiseMongoose.updateOneWithModel(newValueOfEntityToUpdate,newValueOfEntityToUpdate.id,ThisPersistentModel);
+  return genericPromiseMongoose.updateOneWithModel(newValueOfEntityToUpdate,newValueOfEntityToUpdate.username,ThisPersistentModel);
 }
 
 function deleteOne(idOfEntityToDelete) {
