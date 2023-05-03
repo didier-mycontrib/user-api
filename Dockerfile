@@ -1,5 +1,5 @@
-FROM node:16
-# this new image will be create from parent image = node:16 (stable)
+FROM node:18
+# this new image will be create from parent image = node:16 ou node:18 (stable)
 
 # Create app directory inside docker image
 WORKDIR /usr/src/app
@@ -9,7 +9,6 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY  package*.json  ./
 
-RUN npm install pm2 -g
 RUN npm install
 
 
@@ -21,5 +20,5 @@ ENV PORT=8232
 ENV MONGODB_URL=mongodb://root:root@mongoDB.host:27017
 
 EXPOSE 8232
-#CMD [ "npm", "start" ]
-CMD [ "pm2-runtime", "server.js" ]
+CMD [ "npm", "start" ]
+

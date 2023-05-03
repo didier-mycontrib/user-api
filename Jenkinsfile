@@ -9,7 +9,7 @@ pipeline {
 		}
 		stage('Checkout code') {
 			steps {
-			   ws("/conf-docker/backend-user/user-api") {
+			   ws("/docker-contents/user-api") {
 				  checkout scm
 			   }
 			}
