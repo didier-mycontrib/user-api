@@ -1,0 +1,34 @@
+<html>
+<head>
+    <title>dom_crud_account (in oauth2/oidc keycloak server)</title>
+	<script src="./js/my_ajax_util.js" ></script>
+ <script src="./js/dom_crud_account_ajax.js" ></script>  
+</head>
+<body id="main" >
+   
+   <h1>CRUD / AJAX (oauth2/oidc user account in keycloak server)</h1>
+   id: <span id="spanId"></span><br/>
+   username: <input id="username" type="text" /> <br/>
+   firstName: <input id="firstName" type="text" /> <br/>
+   lastName: <input id="lastName" type="text" /> <br/>
+   email: <input id="email" type="text" size="50" /> <br/>
+   newPassword: <input id="newPassword" type="text" /> <br/>
+   mainGroup: <select id="group"></select><br/>
+   <input type="button" onclick="newAccount()" value="New"></input>
+   <input type="button" id="bntAdd" onclick="addAccount()" value="Add"></input> 
+   <input type="button" id="bntUpdate" onclick="updateAccount()" value="Update"></input>
+   <input type="button" id="bntDelete" onclick="deleteAccount()" value="Delete"></input> 
+   
+   <div id="msg"></div> <!-- for message (error or ...) --> 
+   
+   <h3>Account list<h3>
+   <table border="1" id="tableAccounts">
+     <thead>
+      <tr><th>username</th><th>firstName</th><th>lastName</th><th>email</th><th>mainGroup</th></tr>
+	 </thead>
+	 <tbody id="bodyTableau">
+	   <!-- <tr id="tr_username">...</tr> -->
+	 </tbody>
+   </table>
+</body>
+</html>
