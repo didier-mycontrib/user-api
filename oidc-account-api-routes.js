@@ -11,8 +11,8 @@ import remoteOidc from './remote-oidc.js';
 
 /*
 convention d'URL :
-http://localhost:8232/user-api/private/xyz en accès private (avec auth nécessaire)
-http://localhost:8232/user-api/public/xyz en accès public (sans auth nécessaire)
+http://localhost:8232/user-api/v1/private/xyz en accès private (avec auth nécessaire)
+http://localhost:8232/user-api/v1/public/xyz en accès public (sans auth nécessaire)
 NB: si appel en URL public --> realmName="sandboxrealm"
     si appel en URL private (avec token verifié) --> realmName = valeur de ?realm=myrealm
 */
@@ -21,10 +21,10 @@ NB: si appel en URL public --> realmName="sandboxrealm"
 //*******************************************
 
 
-//exemple URL: http://localhost:8232/user-api/public/user/user1?realm=myrealm
-//exemple URL: http://localhost:8232/user-api/public/user/user1
-apiRouter.route(['/user-api/private/user/:username' ,
-                 '/user-api/public/user/:username'])
+//exemple URL: http://localhost:8232/user-api/v1/public/users/user1?realm=myrealm
+//exemple URL: http://localhost:8232/user-api/v1/public/users/user1
+apiRouter.route(['/user-api/v1/private/users/:username' ,'/user-api/v1/public/users/:username'
+				 '/user-api/private/user/:username' ,'/user-api/public/user/:username'])
 .get( async function(req , res  , next ) {
 	var username = req.params.username;
 	var realmName = req.query.realm || "sandboxrealm";
@@ -38,9 +38,9 @@ apiRouter.route(['/user-api/private/user/:username' ,
     } 
 });
 
-//exemple URL: http://localhost:8232/user-api/public/account (returning all accounts)
-apiRouter.route(['/user-api/private/user' , 
-                 '/user-api/public/user'])
+//exemple URL: http://localhost:8232/user-api/v1/public/users (returning all accounts)
+apiRouter.route(['/user-api/v1/private/users' , '/user-api/v1/public/users' ,
+				 '/user-api/private/user' , '/user-api/public/user'])
 .get( async function(req , res  , next ) {
 	//let criteria={};
 	var realmName = req.query.realm || "sandboxrealm";
@@ -56,8 +56,9 @@ apiRouter.route(['/user-api/private/user' ,
     } 
 });
 
-//exemple URL: http://localhost:8232/user-api/public/group (returning all user groups)
-apiRouter.route(['/user-api/private/group','/user-api/public/group'])
+//exemple URL: http://localhost:8232/user-api/v1/public/groups (returning all user groups)
+apiRouter.route(['/user-api/v1/private/groups','/user-api/v1/public/groups',
+				'/user-api/private/group','/user-api/public/group'])
 .get( async function(req , res  , next ) {
 	var realmName = req.query.realm || "sandboxrealm";
 	if(req.path.includes("public")) realmName = "sandboxrealm";
@@ -73,9 +74,10 @@ apiRouter.route(['/user-api/private/group','/user-api/public/group'])
 });
 
 
-// http://localhost:8232/user-api/private/account en mode post
+// http://localhost:8232/user-api/v1/private/users en mode post
 // avec {"firstName":"joe","lastName":"Dalton","email":"joe.dalton@jail.com","username":"user4","groups":["user_of_myrealm"],"newPassword":"pwd4"} dans req.body
-apiRouter.route([ '/user-api/private/account'  , '/user-api/public/user'])
+apiRouter.route([ '/user-api/v1/private/users'  , '/user-api/v1/public/users' ,
+				  '/user-api/private/user'  , '/user-api/public/user'])
 .post(async function(req , res  , next ) {
 	var nouveauMyOidcUser = req.body;
 	var realmName = req.query.realm || "sandboxrealm";
@@ -93,11 +95,14 @@ apiRouter.route([ '/user-api/private/account'  , '/user-api/public/user'])
 
 
 
-// http://localhost:8232/user-api/private/user en mode PUT
+// http://localhost:8232/user-api/v1/private/users/user4 en mode PUT
 // avec {"firstName":"joe","lastName":"Dalton","email":"joe.dalton@jail.com","username":"user4","groups":["user_of_myrealm"],"newPassword":"pwd4"} dans req.body
-apiRouter.route(['/user-api/private/user', '/user-api/public/user'])
+apiRouter.route(['/user-api/v1/private/users', '/user-api/v1/public/users',
+				'/user-api/private/user', '/user-api/public/user'])
 .put( async function(req , res  , next ) {
+	var username = req.params.username;
 	var newValueOfAccountToUpdate = req.body;
+	if(username) newValueOfAccountToUpdate.username=username;
 	var realmName = req.query.realm || "sandboxrealm";
 	if(req.path.includes("public")) realmName = "sandboxrealm";
 	console.log("PUT,newValueOfAccountToUpdate="+JSON.stringify(newValueOfAccountToUpdate));
@@ -112,9 +117,9 @@ apiRouter.route(['/user-api/private/user', '/user-api/public/user'])
 });
 
 
-// http://localhost:8232/user-api/private/user/user1 en mode DELETE
-apiRouter.route(['/user-api/private/user/:username',
-                 '/user-api/public/user/:username'])
+// http://localhost:8232/user-api/v1/private/users/user1 en mode DELETE
+apiRouter.route(['/user-api/v1/private/users/:username','/user-api/v1/public/users/:username' ,
+				'/user-api/private/user/:username','/user-api/public/user/:username'])
 .delete( async function(req , res  , next ) {
 	var username = req.params.username;
 	var realmName = req.query.realm || "sandboxrealm";
