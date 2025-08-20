@@ -8,5 +8,5 @@ npm install -s mongoose
 
 ========================
 
-NB: à ré-ecrire en déléguant à keycloak
+NB: ce projet a en partie été ré-ecrit en déléguant à keycloak
 

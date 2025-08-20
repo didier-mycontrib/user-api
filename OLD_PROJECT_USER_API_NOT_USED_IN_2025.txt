@@ -1,0 +1,7 @@
+NB: le projet group-ddc/user-api (de 2021, …) n'est aujourd'hui plus maintenu , plus utilisé 
+car les "USERS" pour "tp-api" et "qcm-api" , "ddc-api" sont essentiellement gérés en mode oauth2/oidc via keycloak
+---
+Ce projet pourrait éventuellement redevenir utile par la suite (après ajustements).
+---
+et si besoin de faire un lien entre "user keycloak" et "user_in_db" il faudrait plutôt approfondir 
+les paramétrage des "realms" de keycloak
